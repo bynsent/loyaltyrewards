@@ -54,7 +54,8 @@ mongoose.connection.on(
 
 // Create the server on the specified port
 const server = http.createServer(app);
-const port = process.env.PORT || 3000;
-server.listen(port, () =>
-  console.log(`Server running on: http://localhost:${port}`)
-);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+});
