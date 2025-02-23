@@ -8,7 +8,7 @@
     "dev:server": "nodemon server/server.js",
     "debug": "run-p dev:client debug:server",
     "debug:server": "nodemon --inspect-brk server/server.js",
-    "start": "node server/server.js",
+    "start": "cross-env PORT=3000 node server/server.js",
     "start-prod": "run-s start:*",
     "start-prod:build": "ng build --prod",
     "start-prod:server": "cross-env NODE_ENV=production node server/server.js",
