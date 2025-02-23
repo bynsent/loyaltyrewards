@@ -42,12 +42,23 @@ app.use((err, req, res, next) => {
     }
 });
 
-// Connect to the database
-mongoose.connect(process.env.DB_URI || "mongodb://localhost/pick-easy", {
+// Connect to MongoDB using `MONGO_URI` from Railway environment variables
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+    console.error("❌ MongoDB connection string is missing! Set MONGO_URI in Railway.");
+    process.exit(1);
+}
+
+mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+}).then(() => {
+    console.log("✅ Connected to MongoDB successfully!");
+}).catch(err => {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
 });
-mongoose.connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // Use Railway's PORT
 const PORT = process.env.PORT || 3000;
